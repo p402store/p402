@@ -44,7 +44,7 @@ a:hover {
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 0 20px;
 }
@@ -173,11 +173,288 @@ a:hover {
 
 /* Footer */
 .footer {
-  margin-top: 100px;
   padding: 40px 0;
   border-top: 1px solid rgba(255, 107, 0, 0.1);
   text-align: center;
   color: rgba(255, 255, 255, 0.4);
+}
+
+/* Home Page Sections */
+.section-title {
+  font-size: 42px;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 16px;
+  background: linear-gradient(135deg, #ff6b00 0%, #ff8c00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.section-subtitle {
+  font-size: 18px;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 60px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* How It Works Section */
+.how-it-works {
+  padding: 80px 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(255, 107, 0, 0.03) 100%);
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.step-card {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 107, 0, 0.3);
+  border-radius: 16px;
+  padding: 40px 30px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.step-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(255, 107, 0, 0.6);
+  box-shadow: 0 12px 40px rgba(255, 107, 0, 0.2);
+}
+
+.step-icon {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #ff6b00 0%, #ff8c00 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: 800;
+  color: white;
+  margin: 0 auto 24px;
+}
+
+.step-card h3 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: #fff;
+}
+
+.step-card p {
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.6;
+  font-size: 15px;
+}
+
+/* Payment Flow Section */
+.payment-flow {
+  padding: 80px 0;
+  background: rgba(255, 107, 0, 0.02);
+}
+
+.flow-diagram {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.flow-step {
+  background: rgba(0, 0, 0, 0.5);
+  border: 2px solid rgba(255, 107, 0, 0.3);
+  border-radius: 16px;
+  padding: 30px 24px;
+  text-align: center;
+  flex: 1;
+  min-width: 200px;
+  max-width: 250px;
+  transition: all 0.3s ease;
+}
+
+.flow-step:hover {
+  border-color: rgba(255, 107, 0, 0.6);
+  transform: scale(1.05);
+}
+
+.flow-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.flow-step h4 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #ff6b00;
+  margin-bottom: 12px;
+}
+
+.flow-step p {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.5;
+}
+
+.flow-arrow {
+  font-size: 32px;
+  color: #ff6b00;
+  font-weight: bold;
+}
+
+/* Benefits Section */
+.benefits {
+  padding: 80px 0;
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.benefit-card {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 107, 0, 0.2);
+  border-radius: 16px;
+  padding: 32px 28px;
+  transition: all 0.3s ease;
+}
+
+.benefit-card:hover {
+  border-color: rgba(255, 107, 0, 0.5);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(255, 107, 0, 0.15);
+}
+
+.benefit-icon {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.benefit-card h3 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: #fff;
+}
+
+.benefit-card p {
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+/* Tech Stack Section */
+.tech-stack {
+  padding: 80px 0;
+  background: linear-gradient(180deg, rgba(255, 107, 0, 0.02) 0%, rgba(0, 0, 0, 0) 100%);
+}
+
+.tech-categories {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.tech-category {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 107, 0, 0.3);
+  border-radius: 16px;
+  padding: 32px 24px;
+}
+
+.tech-category h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #ff6b00;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.tech-items {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tech-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: rgba(255, 107, 0, 0.05);
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.tech-item:hover {
+  background: rgba(255, 107, 0, 0.1);
+  transform: translateX(4px);
+}
+
+.tech-emoji {
+  font-size: 24px;
+  width: 32px;
+  text-align: center;
+}
+
+.tech-item span:last-child {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* CTA Section */
+.cta-section {
+  padding: 90px 0;
+  background: linear-gradient(135deg, rgba(255, 107, 0, 0.1) 0%, rgba(255, 140, 0, 0.05) 100%);
+}
+
+.cta-content {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.cta-content h2 {
+  font-size: 48px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, #ff6b00 0%, #ff8c00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.cta-content p {
+  font-size: 20px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 40px;
+  line-height: 1.6;
+}
+
+.btn-large {
+  padding: 18px 48px;
+  font-size: 18px;
+  font-weight: 700;
 }
 
 /* Dashboard Page */
@@ -409,11 +686,16 @@ a:hover {
 
 .api-detail-page .container {
   padding-top: 40px;
+  padding-left: 40px;
+  padding-right: 40px;
+  max-width: 1800px;
+  margin: 0 auto;
 }
 
 .api-detail-content {
-  max-width: 1400px;
+  max-width: 100%;
   margin: 0 auto;
+  width: 100%;
 }
 
 .back-btn {
@@ -439,8 +721,8 @@ a:hover {
 /* Two Column Grid Layout */
 .detail-grid {
   display: grid;
-  grid-template-columns: 400px 1fr;
-  gap: 30px;
+  grid-template-columns: 420px 1fr;
+  gap: 40px;
   align-items: start;
 }
 
@@ -450,12 +732,35 @@ a:hover {
   gap: 20px;
   position: sticky;
   top: 100px;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+/* Custom scrollbar for left column */
+.left-column::-webkit-scrollbar {
+  width: 6px;
+}
+
+.left-column::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+.left-column::-webkit-scrollbar-thumb {
+  background: rgba(255, 107, 0, 0.5);
+  border-radius: 3px;
+}
+
+.left-column::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 107, 0, 0.7);
 }
 
 .right-column {
   display: flex;
   flex-direction: column;
   gap: 30px;
+  min-width: 0; /* Allow content to shrink */
 }
 
 .api-header {
@@ -494,13 +799,30 @@ a:hover {
 .endpoint-content {
   flex: 1;
   overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 107, 0, 0.5) rgba(0, 0, 0, 0.2);
+}
+
+.endpoint-content::-webkit-scrollbar {
+  height: 6px;
+}
+
+.endpoint-content::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+.endpoint-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 107, 0, 0.5);
+  border-radius: 3px;
 }
 
 .endpoint-content code {
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
   font-size: 13px;
   color: #ff8c00;
-  word-break: break-all;
+  white-space: nowrap;
 }
 
 .btn-copy {
@@ -673,6 +995,7 @@ a:hover {
   border: 1px solid rgba(255, 107, 0, 0.3);
   border-radius: 16px;
   padding: 40px;
+  overflow: hidden;
 }
 
 .documentation-section h2,
@@ -694,6 +1017,10 @@ a:hover {
   color: rgba(255, 255, 255, 0.9);
   line-height: 1.8;
   font-size: 16px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  max-width: 100%;
 }
 
 .doc-content :deep(h1) {
@@ -703,6 +1030,7 @@ a:hover {
   font-weight: 800;
   border-bottom: 2px solid rgba(255, 107, 0, 0.3);
   padding-bottom: 8px;
+  word-break: break-word;
 }
 
 .doc-content :deep(h2) {
@@ -710,6 +1038,7 @@ a:hover {
   color: #ff8c00;
   margin: 20px 0 12px;
   font-weight: 700;
+  word-break: break-word;
 }
 
 .doc-content :deep(h3) {
@@ -717,10 +1046,13 @@ a:hover {
   color: #ff8c00;
   margin: 16px 0 10px;
   font-weight: 600;
+  word-break: break-word;
 }
 
 .doc-content :deep(p) {
   margin: 12px 0;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .doc-content :deep(code) {
@@ -730,6 +1062,8 @@ a:hover {
   border-radius: 4px;
   font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
   font-size: 14px;
+  word-break: break-all;
+  overflow-wrap: anywhere;
 }
 
 .doc-content :deep(pre) {
@@ -738,13 +1072,33 @@ a:hover {
   border-radius: 8px;
   padding: 16px;
   overflow-x: auto;
+  overflow-y: hidden;
   margin: 16px 0;
+  max-width: 100%;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 107, 0, 0.5) rgba(0, 0, 0, 0.2);
+}
+
+.doc-content :deep(pre)::-webkit-scrollbar {
+  height: 6px;
+}
+
+.doc-content :deep(pre)::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+.doc-content :deep(pre)::-webkit-scrollbar-thumb {
+  background: rgba(255, 107, 0, 0.5);
+  border-radius: 3px;
 }
 
 .doc-content :deep(pre code) {
   background: none;
   color: rgba(255, 255, 255, 0.9);
   padding: 0;
+  white-space: pre;
+  word-break: normal;
 }
 
 .doc-content :deep(a) {
@@ -752,6 +1106,8 @@ a:hover {
   text-decoration: none;
   border-bottom: 1px solid rgba(255, 107, 0, 0.3);
   transition: all 0.3s ease;
+  word-break: break-all;
+  overflow-wrap: break-word;
 }
 
 .doc-content :deep(a:hover) {
@@ -761,6 +1117,7 @@ a:hover {
 .doc-content :deep(strong) {
   color: #ff8c00;
   font-weight: 700;
+  word-break: break-word;
 }
 
 .doc-content :deep(em) {
@@ -910,7 +1267,24 @@ a:hover {
   border-radius: 8px;
   padding: 20px;
   overflow-x: auto;
+  overflow-y: hidden;
   margin-top: 16px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 107, 0, 0.5) rgba(0, 0, 0, 0.2);
+}
+
+.code-example::-webkit-scrollbar {
+  height: 6px;
+}
+
+.code-example::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+.code-example::-webkit-scrollbar-thumb {
+  background: rgba(255, 107, 0, 0.5);
+  border-radius: 3px;
 }
 
 .code-example pre {
@@ -922,6 +1296,8 @@ a:hover {
   font-size: 14px;
   line-height: 1.6;
   color: rgba(255, 255, 255, 0.9);
+  white-space: pre;
+  word-break: normal;
 }
 
 .tag-list {
@@ -976,6 +1352,61 @@ a:hover {
     padding-top: 5px;
   }
   
+  /* Home Page Sections Responsive */
+  .section-title {
+    font-size: 32px;
+  }
+  
+  .section-subtitle {
+    font-size: 16px;
+    margin-bottom: 40px;
+  }
+  
+  .how-it-works,
+  .payment-flow,
+  .benefits,
+  .tech-stack {
+    padding: 50px 0;
+  }
+  
+  .cta-section {
+    padding: 60px 0;
+  }
+  
+  .steps-grid,
+  .benefits-grid,
+  .tech-categories {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  
+  .flow-diagram {
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .flow-arrow {
+    transform: rotate(90deg);
+    font-size: 24px;
+  }
+  
+  .flow-step {
+    max-width: 100%;
+  }
+  
+  .cta-content h2 {
+    font-size: 32px;
+  }
+  
+  .cta-content p {
+    font-size: 16px;
+  }
+  
+  .btn-large {
+    width: 100%;
+    padding: 16px 32px;
+  }
+  
   .dashboard-page .container,
   .marketplace-page .container {
     padding-top: 20px;
@@ -990,6 +1421,11 @@ a:hover {
   }
   
   /* API Detail Responsive */
+  .api-detail-page .container {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  
   .detail-grid {
     grid-template-columns: 1fr;
     gap: 20px;
@@ -998,6 +1434,9 @@ a:hover {
   .left-column {
     position: static;
     order: 1;
+    max-height: none;
+    overflow-y: visible;
+    padding-right: 0;
   }
   
   .right-column {
@@ -1010,6 +1449,12 @@ a:hover {
   
   .api-header h1 {
     font-size: 24px;
+  }
+  
+  .title-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
   }
   
   .endpoint-section,
@@ -1047,16 +1492,84 @@ a:hover {
   .code-example code {
     font-size: 13px;
   }
+  
+  .doc-content :deep(h1) {
+    font-size: 22px;
+  }
+  
+  .doc-content :deep(h2) {
+    font-size: 18px;
+  }
+  
+  .doc-content :deep(h3) {
+    font-size: 16px;
+  }
+  
+  .api-detail-content {
+    padding: 0;
+  }
+  
+  .documentation-section,
+  .usage-section {
+    padding: 24px;
+  }
 }
 
-@media (min-width: 769px) and (max-width: 1024px) {
-  .detail-grid {
-    grid-template-columns: 350px 1fr;
+@media (min-width: 769px) and (max-width: 1200px) {
+  /* Home Page Tablet */
+  .steps-grid,
+  .benefits-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+  }
+  
+  .tech-categories {
+    grid-template-columns: repeat(2, 1fr);
     gap: 24px;
+  }
+  
+  .flow-diagram {
+    gap: 16px;
+  }
+  
+  .flow-step {
+    min-width: 180px;
+  }
+  
+  .flow-arrow {
+    font-size: 28px;
+  }
+  
+  /* API Detail Tablet */
+  .api-detail-page .container {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+  
+  .detail-grid {
+    grid-template-columns: 380px 1fr;
+    gap: 30px;
   }
   
   .left-column {
     top: 80px;
+    max-height: calc(100vh - 100px);
+  }
+  
+  .documentation-section,
+  .usage-section {
+    padding: 32px;
+  }
+}
+
+@media (min-width: 1201px) and (max-width: 1600px) {
+  .api-detail-page .container {
+    max-width: 1600px;
+  }
+  
+  .detail-grid {
+    grid-template-columns: 400px 1fr;
+    gap: 35px;
   }
 }
 

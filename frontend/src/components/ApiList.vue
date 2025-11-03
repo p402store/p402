@@ -19,17 +19,19 @@
       </div>
       
       <div class="api-info-grid">
-        <div class="info-item">
+        <div class="info-item target-url-item">
           <span class="info-label">Target URL</span>
-          <span class="info-value">{{ api.target_url }}</span>
+          <div class="info-value info-url" :title="api.target_url">
+            {{ api.target_url }}
+          </div>
         </div>
         <div class="info-item">
           <span class="info-label">Price</span>
           <span class="info-value info-price">{{ api.price }}</span>
         </div>
-        <div class="info-item">
+        <div class="info-item proxy-url-item">
           <span class="info-label">Proxy URL</span>
-          <code class="info-proxy" @click="$emit('copy-url', api.id)">
+          <code class="info-proxy" @click="$emit('copy-url', api.id)" :title="getProxyUrl(api.id)">
             {{ getProxyUrl(api.id) }}
           </code>
         </div>
@@ -170,8 +172,8 @@ function getProxyUrl(apiId: string): string {
 .api-info-grid {
   display: grid;
   grid-template-columns: 2fr 1fr 2fr;
-  gap: 16px;
-  padding: 16px;
+  gap: 20px;
+  padding: 20px;
   background: rgba(0, 0, 0, 0.4);
   border-radius: 8px;
   border: 1px solid rgba(255, 107, 0, 0.15);
@@ -180,7 +182,13 @@ function getProxyUrl(apiId: string): string {
 .info-item {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
+  min-width: 0; /* Allow content to shrink */
+}
+
+.target-url-item,
+.proxy-url-item {
+  overflow: hidden;
 }
 
 .info-label {
@@ -189,6 +197,7 @@ function getProxyUrl(apiId: string): string {
   letter-spacing: 0.5px;
   color: rgba(255, 255, 255, 0.4);
   font-weight: 600;
+  flex-shrink: 0;
 }
 
 .info-value {
@@ -198,33 +207,79 @@ function getProxyUrl(apiId: string): string {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  word-break: break-all;
+}
+
+.info-url {
+  background: rgba(0, 0, 0, 0.4);
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  cursor: default;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 107, 0, 0.5) rgba(0, 0, 0, 0.2);
+}
+
+.info-url::-webkit-scrollbar {
+  height: 4px;
+}
+
+.info-url::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 2px;
+}
+
+.info-url::-webkit-scrollbar-thumb {
+  background: rgba(255, 107, 0, 0.5);
+  border-radius: 2px;
 }
 
 .info-price {
   color: #ff6b00;
   font-weight: 700;
-  font-size: 16px;
+  font-size: 18px;
+  white-space: normal;
 }
 
 .info-proxy {
   background: rgba(255, 107, 0, 0.1);
-  padding: 6px 10px;
+  padding: 8px 12px;
   border-radius: 6px;
   font-size: 12px;
   cursor: pointer;
   color: #ff6b00;
   border: 1px solid rgba(255, 107, 0, 0.3);
-  overflow: hidden;
-  text-overflow: ellipsis;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  transition: all 0.2s ease;
+  overflow-x: auto;
   white-space: nowrap;
   display: block;
-  transition: all 0.2s ease;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 107, 0, 0.5) rgba(0, 0, 0, 0.2);
+}
+
+.info-proxy::-webkit-scrollbar {
+  height: 4px;
+}
+
+.info-proxy::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 2px;
+}
+
+.info-proxy::-webkit-scrollbar-thumb {
+  background: rgba(255, 107, 0, 0.5);
+  border-radius: 2px;
 }
 
 .info-proxy:hover {
   background: rgba(255, 107, 0, 0.2);
   border-color: rgba(255, 107, 0, 0.5);
+  box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1);
 }
 
 .api-list-actions {
@@ -333,9 +388,14 @@ input:checked + .slider:before {
   font-size: 14px;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1400px) {
   .api-info-grid {
     grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .info-item {
+    gap: 6px;
   }
 }
 
@@ -346,23 +406,43 @@ input:checked + .slider:before {
 
   .api-info-grid {
     grid-template-columns: 1fr;
+    padding: 16px;
+    gap: 14px;
   }
   
   .info-value,
-  .info-proxy {
-    font-size: 12px;
+  .info-proxy,
+  .info-url {
+    font-size: 11px;
+  }
+  
+  .info-price {
+    font-size: 16px;
   }
 }
 
 @media (max-width: 768px) {
+  .api-list-item {
+    padding: 14px;
+  }
+  
+  .api-info-grid {
+    padding: 14px;
+    gap: 12px;
+  }
+  
   .api-list-actions {
     flex-direction: column;
     align-items: stretch;
+    gap: 10px;
   }
 
-  .api-list-actions .btn,
-  .api-list-actions .switch {
+  .api-list-actions .btn {
     width: 100%;
+  }
+  
+  .api-list-actions .switch {
+    align-self: flex-start;
   }
 }
 </style>

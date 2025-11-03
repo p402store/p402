@@ -8,6 +8,7 @@ export interface Api {
   price: string;
   network: string;
   is_active: number;
+  headers?: Record<string, string>; // Custom headers for proxy requests
   created_at: number;
   updated_at: number;
 }
@@ -19,6 +20,7 @@ export interface ApiFormData {
   target_url: string;
   price: string;
   network: 'ethereum' | 'polygon' | 'solana' | 'base' | 'arbitrum';
+  headers?: Record<string, string>; // Custom headers
 }
 
 export interface User {

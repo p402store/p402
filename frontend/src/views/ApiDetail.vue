@@ -53,18 +53,7 @@
               </div>
             </div>
             
-            <!-- API Endpoint -->
-            <div class="endpoint-section">
-              <h3>API Endpoint</h3>
-              <div class="endpoint-box">
-                <div class="endpoint-content">
-                  <code>{{ apiEndpoint }}</code>
-                </div>
-                <button @click="copyEndpoint" class="btn-copy" :class="{ copied }">
-                  {{ copied ? '✓' : '📋' }}
-                </button>
-              </div>
-            </div>
+           
             
             <!-- Payment Details -->
             <div class="payment-details">
@@ -89,6 +78,18 @@
           
           <!-- Right Column: Documentation & Usage -->
           <div class="right-column">
+             <!-- API Endpoint -->
+            <div class="endpoint-section">
+              <h3>API Endpoint</h3>
+              <div class="endpoint-box">
+                <div class="endpoint-content">
+                  <code>{{ apiEndpoint }}</code>
+                </div>
+                <button @click="copyEndpoint" class="btn-copy" :class="{ copied }">
+                  {{ copied ? '✓' : '📋' }}
+                </button>
+              </div>
+            </div>
             <!-- Documentation -->
             <div v-if="api.documentation" class="documentation-section">
               <h2>Documentation</h2>

@@ -26,7 +26,7 @@ app.get("/api/public/apis", async (c) => {
     const registry = new ApiRegistry(c.env.DB);
     const apis = await registry.getAllActiveApis();
     
-    // Remove sensitive fields from response
+    // Remove sensitive fields from response (including headers)
     const publicApis = apis.map(({ id, api_name, description, price, network, owner_address, created_at, documentation, tags }) => ({
       id,
       api_name,
@@ -306,7 +306,7 @@ app.get("/manage/my-apis/:address", async (c) => {
 app.post("/manage/register", async (c) => {
   try {
     const body = await c.req.json();
-    const { owner_address, api_name, description, target_url, price, network } = body;
+    const { owner_address, api_name, description, target_url, price, network, headers } = body;
 
     // Validate required fields
     if (!owner_address || !api_name || !target_url || !price || !network) {
@@ -317,14 +317,7 @@ app.post("/manage/register", async (c) => {
       }, 400);
     }
 
-    // Validate wallet address format
-    if (!owner_address.match(/^0x[a-fA-F0-9]{40}$/)) {
-      return c.json({
-        error: "Invalid Address",
-        message: "owner_address must be a valid Ethereum address",
-        code: "INVALID_ADDRESS"
-      }, 400);
-    }
+ 
 
     // Validate URL format
     try {
@@ -346,6 +339,12 @@ app.post("/manage/register", async (c) => {
       }, 400);
     }
 
+    // Validate and stringify headers if provided
+    let headersStr = '{}';
+    if (headers && typeof headers === 'object') {
+      headersStr = JSON.stringify(headers);
+    }
+
     const registry = new ApiRegistry(c.env.DB);
     const api = await registry.registerApi({
       owner_address,
@@ -354,6 +353,7 @@ app.post("/manage/register", async (c) => {
       target_url,
       price,
       network,
+      headers: headersStr,
       is_active: 1,
     });
 
@@ -412,6 +412,11 @@ app.put("/manage/apis/:id", async (c) => {
         message: "price must be in format: $0.001",
         code: "INVALID_PRICE"
       }, 400);
+    }
+
+    // Convert headers object to JSON string if provided
+    if (body.headers && typeof body.headers === 'object') {
+      body.headers = JSON.stringify(body.headers);
     }
 
     const registry = new ApiRegistry(c.env.DB);
@@ -510,7 +515,7 @@ app.all("/api/:id/*", async (c) => {
       }, 403);
     }
 
-    return await proxyToTargetApi(c, api.target_url, path);
+    return await proxyToTargetApi(c, api.target_url, path, api.headers);
   } catch (error) {
     console.error("Proxy route error:", error);
     return c.json({
@@ -545,7 +550,7 @@ app.all("/api/:id", async (c) => {
       }, 403);
     }
 
-    return await proxyToTargetApi(c, api.target_url, path);
+    return await proxyToTargetApi(c, api.target_url, path, api.headers);
   } catch (error) {
     console.error("Proxy route error:", error);
     return c.json({

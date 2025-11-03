@@ -11,6 +11,7 @@ export interface ApiConfig {
   price: string;
   network: string;
   is_active: number;
+  headers?: string; // JSON string of custom headers (private field)
   created_at: number;
   updated_at: number;
 }
@@ -32,8 +33,8 @@ export class ApiRegistry {
 
     await this.db
       .prepare(
-        `INSERT INTO apis (id, owner_address, api_name, description, target_url, price, network, is_active, created_at, updated_at)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+        `INSERT INTO apis (id, owner_address, api_name, description, target_url, price, network, is_active, headers, created_at, updated_at)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
       )
       .bind(
         id,
@@ -44,6 +45,7 @@ export class ApiRegistry {
         config.price,
         config.network,
         config.is_active,
+        config.headers || '{}',
         now,
         now
       )

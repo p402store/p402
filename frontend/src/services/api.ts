@@ -14,19 +14,19 @@ export const apiService = {
   // Get all active APIs
   async getAllApis(): Promise<Api[]> {
     const response = await apiClient.get('/manage/apis');
-    return response.data.apis;
+    return response.data.apis.map(parseApiHeaders);
   },
 
   // Get user's APIs
   async getUserApis(address: string): Promise<Api[]> {
     const response = await apiClient.get(`/manage/my-apis/${address}`);
-    return response.data.apis;
+    return response.data.apis.map(parseApiHeaders);
   },
 
   // Register new API
   async registerApi(data: ApiFormData & { owner_address: string }): Promise<Api> {
     const response = await apiClient.post('/manage/register', data);
-    return response.data.api;
+    return parseApiHeaders(response.data.api);
   },
 
   // Update API
@@ -44,3 +44,15 @@ export const apiService = {
     await apiClient.put(`/manage/apis/${id}`, { is_active: isActive ? 1 : 0 });
   },
 };
+
+// Helper function to parse headers string to object
+function parseApiHeaders(api: any): Api {
+  if (api.headers && typeof api.headers === 'string') {
+    try {
+      api.headers = JSON.parse(api.headers);
+    } catch {
+      api.headers = {};
+    }
+  }
+  return api;
+}

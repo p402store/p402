@@ -91,6 +91,33 @@
             </select>
           </div>
         </div>
+
+        <div class="form-group">
+          <label>Custom Headers (Optional)</label>
+          <div class="headers-section">
+            <div v-for="(header, index) in headersList" :key="index" class="header-row">
+              <input 
+                v-model="header.key" 
+                type="text" 
+                placeholder="Header Name (e.g., X-API-Key)"
+                class="header-input"
+              >
+              <input 
+                v-model="header.value" 
+                type="text" 
+                placeholder="Header Value"
+                class="header-input"
+              >
+              <button type="button" @click="removeHeader(index)" class="btn-icon btn-remove">
+                &times;
+              </button>
+            </div>
+            <button type="button" @click="addHeader" class="btn btn-outline btn-sm">
+              + Add Header
+            </button>
+          </div>
+          <small>These headers will be sent with every proxied request. Useful for API keys, authentication, etc.</small>
+        </div>
         
         <div class="form-actions">
           <button type="button" @click="close" class="btn btn-outline">
@@ -126,11 +153,46 @@ const formData = ref<ApiFormData>({
   documentation: '',
   target_url: '',
   price: '$0.001',
-  network: 'solana'
+  network: 'solana',
+  headers: {}
 });
 
 const isEdit = ref(false);
 const activeTab = ref<'write' | 'preview'>('write');
+
+// Headers management
+interface HeaderItem {
+  key: string;
+  value: string;
+}
+
+const headersList = ref<HeaderItem[]>([]);
+
+function addHeader() {
+  headersList.value.push({ key: '', value: '' });
+}
+
+function removeHeader(index: number) {
+  headersList.value.splice(index, 1);
+}
+
+function headersListToObject(): Record<string, string> {
+  const headers: Record<string, string> = {};
+  headersList.value.forEach(h => {
+    if (h.key && h.value) {
+      headers[h.key] = h.value;
+    }
+  });
+  return headers;
+}
+
+function headersObjectToList(headers?: Record<string, string>) {
+  if (!headers || Object.keys(headers).length === 0) {
+    headersList.value = [];
+    return;
+  }
+  headersList.value = Object.entries(headers).map(([key, value]) => ({ key, value }));
+}
 
 // Simple markdown to HTML converter
 const markdownPreview = computed(() => {
@@ -164,8 +226,10 @@ watch(() => props.api, (newApi) => {
       documentation: newApi.documentation || '',
       target_url: newApi.target_url,
       price: newApi.price,
-      network: newApi.network as any
+      network: newApi.network as any,
+      headers: newApi.headers || {}
     };
+    headersObjectToList(newApi.headers);
   } else {
     isEdit.value = false;
     resetForm();
@@ -179,8 +243,10 @@ function resetForm() {
     documentation: '',
     target_url: '',
     price: '$0.001',
-    network: 'solana'
+    network: 'solana',
+    headers: {}
   };
+  headersList.value = [];
   activeTab.value = 'write';
 }
 
@@ -190,6 +256,8 @@ function close() {
 }
 
 function handleSubmit() {
+  // Convert headers list to object before submitting
+  formData.value.headers = headersListToObject();
   emit('submit', formData.value);
 }
 </script>
@@ -464,6 +532,76 @@ function handleSubmit() {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 20px;
+}
+
+.headers-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 107, 0, 0.2);
+  border-radius: 8px;
+}
+
+.header-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.header-input {
+  flex: 1;
+  padding: 10px 12px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 107, 0, 0.3);
+  border-radius: 6px;
+  color: white;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.header-input:focus {
+  outline: none;
+  border-color: #ff6b00;
+  box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1);
+}
+
+.header-input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.btn-icon {
+  padding: 8px 12px;
+  background: transparent;
+  border: 1px solid rgba(255, 107, 0, 0.3);
+  border-radius: 6px;
+  color: #ff6b00;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  line-height: 1;
+}
+
+.btn-icon:hover {
+  background: rgba(255, 107, 0, 0.1);
+  border-color: #ff6b00;
+}
+
+.btn-remove {
+  color: #ff4444;
+  border-color: rgba(255, 68, 68, 0.3);
+}
+
+.btn-remove:hover {
+  background: rgba(255, 68, 68, 0.1);
+  border-color: #ff4444;
+}
+
+.btn-sm {
+  padding: 8px 16px;
+  font-size: 14px;
+  align-self: flex-start;
 }
 
 .form-actions {

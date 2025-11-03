@@ -18,13 +18,7 @@
 		{
 			"binding": "DB",
 			"database_name": "p402_apis",
-			"database_id": "preview_id"
-		},
-		{
-			"binding": "p402_apis",
-			"database_name": "p402_apis",
-			"database_id": "7e7f69c8-a89a-493a-a9ca-1d7a10cc86ef",
-			"remote": true
+			"database_id": "7e7f69c8-a89a-493a-a9ca-1d7a10cc86ef"
 		}
 	],
 	"vars": {

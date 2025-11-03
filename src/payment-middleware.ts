@@ -131,7 +131,7 @@ function createProxyError(
   };
 }
 
-export async function proxyToTargetApi(c: Context, targetUrl: string, originalPath: string) {
+export async function proxyToTargetApi(c: Context, targetUrl: string, originalPath: string, customHeaders?: string) {
   // /api/{api_id}/rest/of/path -> /rest/of/path
   const match = originalPath.match(/^\/api\/[^\/]+(.*)$/);
   const targetPath = match ? match[1] : "";
@@ -181,6 +181,20 @@ export async function proxyToTargetApi(c: Context, targetUrl: string, originalPa
     headers.set("X-Forwarded-Proto", "https");
     headers.set("X-Forwarded-Host", c.req.header("host") || "");
     headers.set("X-Real-IP", c.req.header("cf-connecting-ip") || "");
+
+    // Merge custom headers from API configuration
+    if (customHeaders) {
+      try {
+        const customHeadersObj = JSON.parse(customHeaders) as Record<string, string>;
+        for (const [key, value] of Object.entries(customHeadersObj)) {
+          if (key && value) {
+            headers.set(key, value);
+          }
+        }
+      } catch (error) {
+        console.error("Failed to parse custom headers:", error);
+      }
+    }
 
     // Make request to target API with timeout
     const controller = new AbortController();
