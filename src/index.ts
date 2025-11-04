@@ -453,13 +453,7 @@ app.delete("/manage/apis/:id", async (c) => {
     const id = c.req.param("id");
     
     // Validate UUID format
-    if (!id.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i)) {
-      return c.json({
-        error: "Invalid API ID",
-        message: "API ID must be a valid UUID",
-        code: "INVALID_ID"
-      }, 400);
-    }
+  
     
     const registry = new ApiRegistry(c.env.DB);
     const success = await registry.deleteApi(id);
