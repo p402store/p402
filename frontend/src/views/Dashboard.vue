@@ -42,6 +42,9 @@
       @close="closeModal"
       @submit="submitApi"
     />
+
+    <!-- Footer -->
+    <Footer />
   </div>
 </template>
 
@@ -52,6 +55,7 @@ import { useToast } from 'vue-toastification';
 import { useAuthStore } from '../stores/auth';
 import { apiService } from '../services/api';
 import NavBar from '../components/NavBar.vue';
+import Footer from '../components/Footer.vue';
 import type { Api, ApiFormData } from '../types';
 import StatsGrid from '../components/StatsGrid.vue';
 import ApiList from '../components/ApiList.vue';

@@ -7,8 +7,28 @@ export default defineConfig({
   build: {
     outDir: '../public',
     emptyOutDir: true,
+    chunkSizeWarningLimit: 1000,
     rollupOptions: {
-      external: ['react', 'react-dom']
+      external: ['react', 'react-dom'],
+      output: {
+        manualChunks: {
+          'vendor': [
+            'vue',
+            'vue-router',
+            'pinia'
+          ],
+          'solana': [
+            '@solana/wallet-adapter-base',
+            '@solana/wallet-adapter-phantom',
+            '@solana/wallet-adapter-solflare',
+            '@solana/wallet-adapter-wallets',
+            '@solana/web3.js'
+          ],
+          'ui': [
+            'vue-toastification'
+          ]
+        }
+      }
     }
   },
   optimizeDeps: {

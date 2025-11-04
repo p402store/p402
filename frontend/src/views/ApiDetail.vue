@@ -225,6 +225,9 @@ fetchWithPayment(url, {
         </div>
       </div>
     </div>
+
+    <!-- Footer -->
+    <Footer />
   </div>
 </template>
 
@@ -233,6 +236,7 @@ import { ref, computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { useToast } from 'vue-toastification';
 import NavBar from '../components/NavBar.vue';
+import Footer from '../components/Footer.vue';
 import type { Api } from '../types';
 
 const route = useRoute();

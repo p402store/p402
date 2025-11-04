@@ -8,13 +8,10 @@ import type { Resource, Network } from "x402-hono";
 
 const app = new Hono<{ Bindings: CloudflareBindings }>();
 
-// CORS middleware with credentials
+// CORS middleware with credentials allow all
+
 app.use("*", cors({
-  origin: [
-    'http://localhost:5173',
-    'http://localhost:3000',
-    'https://p402.pages.dev'
-  ],
+  origin: "*",
   credentials: true,
   allowMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowHeaders: ['Content-Type', 'Authorization'],

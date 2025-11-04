@@ -220,11 +220,7 @@
     />
 
     <!-- Footer -->
-    <footer class="footer">
-      <div class="container">
-        <p>&copy; 2025 P402. Built with ❤️ on Solana.</p>
-      </div>
-    </footer>
+    <Footer />
   </div>
 </template>
 
@@ -236,6 +232,7 @@ import { useAuthStore } from '../stores/auth';
 import NavBar from '../components/NavBar.vue';
 import WalletModal from '../components/WalletModal.vue';
 import HeroSection from '../components/HeroSection.vue';
+import Footer from '../components/Footer.vue';
 
 const router = useRouter();
 const authStore = useAuthStore();
