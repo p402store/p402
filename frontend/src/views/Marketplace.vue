@@ -102,6 +102,25 @@
               {{ network }}
             </button>
           </div>
+
+          <!-- Verified Filter Toggle -->
+          <div class="verified-filter">
+            <label class="toggle-label">
+              <input 
+                type="checkbox" 
+                v-model="showVerifiedOnly"
+                class="toggle-checkbox"
+              />
+              <span class="toggle-switch"></span>
+              <span class="toggle-text">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                  <polyline points="22 4 12 14.01 9 11.01"/>
+                </svg>
+                Show Verified Only
+              </span>
+            </label>
+          </div>
         </div>
       </div>
 
@@ -133,7 +152,14 @@
         >
           <div class="card-header">
             <div class="card-title-section">
-              <h3>{{ api.api_name }}</h3>
+              <h3>
+                {{ api.api_name }}
+                <span v-if="api.verified === 1" class="verified-badge" title="Verified API">
+                  <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 48 48">
+<path fill="#c8e6c9" d="M44,24c0,11.045-8.955,20-20,20S4,35.045,4,24S12.955,4,24,4S44,12.955,44,24z"></path><path fill="#4caf50" d="M34.586,14.586l-13.57,13.586l-5.602-5.586l-2.828,2.828l8.434,8.414l16.395-16.414L34.586,14.586z"></path>
+</svg>
+                </span>
+              </h3>
               <span class="api-id">#{{ api.id }}</span>
             </div>
             <span class="network-badge">{{ api.network }}</span>
@@ -183,6 +209,7 @@ const apis = ref<Api[]>([]);
 const loading = ref(false);
 const searchQuery = ref('');
 const selectedNetwork = ref('all');
+const showVerifiedOnly = ref(true); // Default olarak verified olanları göster
 
 const networks = ['solana', 'ethereum', 'polygon', 'base', 'arbitrum'];
 
@@ -193,6 +220,11 @@ const filteredApis = computed(() => {
   }
   
   let filtered = apis.value
+  
+  // Filter by verified status
+  if (showVerifiedOnly.value) {
+    filtered = filtered.filter(api => api.verified === 1);
+  }
   
   // Filter by search query
   if (searchQuery.value) {
@@ -256,6 +288,7 @@ function useApi(api: Api) {
 function resetFilters() {
   searchQuery.value = '';
   selectedNetwork.value = 'all';
+  showVerifiedOnly.value = true; // Reset to default (verified only)
 }
 
 onMounted(() => {
@@ -264,316 +297,44 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.marketplace-page {
-  min-height: 100vh;
-  background: #0a0a0a;
-}
-
-.container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 40px 24px 80px;
-}
-
-/* Header Section */
-.marketplace-header {
-  text-align: center;
-  margin-bottom: 32px;
-}
-
-.page-title {
-  font-size: 36px;
-  font-weight: 800;
-  margin-bottom: 12px;
-}
-
-.gradient-text {
-  background: linear-gradient(135deg, #ff6b00 0%, #ff8c00 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.subtitle {
-  font-size: 16px;
-  color: rgba(255, 255, 255, 0.5);
-  font-weight: 400;
-}
-
-/* Stats Overview */
-.stats-overview {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 12px;
-  margin-bottom: 24px;
-}
-
-.stat-card {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 107, 0, 0.2);
-  border-radius: 8px;
-  padding: 16px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  transition: all 0.3s ease;
-}
-
-.stat-card:hover {
-  background: rgba(255, 255, 255, 0.04);
-  border-color: rgba(255, 107, 0, 0.4);
-  transform: translateY(-2px);
-}
-
-.stat-icon {
-  color: #ff6b00;
-  flex-shrink: 0;
-}
-
-.stat-content {
-  flex: 1;
-}
-
-.stat-label {
-  font-size: 11px;
-  color: rgba(255, 255, 255, 0.5);
-  margin-bottom: 2px;
-  font-weight: 500;
-}
-
-.stat-value {
-  font-size: 24px;
-  font-weight: 800;
-  color: #ffffff;
-  line-height: 1;
-}
-
-/* Filters Card */
-.filters-card {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 107, 0, 0.2);
-  border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 24px;
-}
-
-.filters-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-}
-
-.filters-header h3 {
-  font-size: 14px;
-  font-weight: 700;
-  color: #ffffff;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.filters-header h3 svg {
-  color: #ff6b00;
-}
-
-.btn-reset {
-  padding: 5px 12px;
-  background: transparent;
-  border: 1px solid rgba(255, 107, 0, 0.3);
-  border-radius: 4px;
-  color: #ff6b00;
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.btn-reset svg {
-  opacity: 0.7;
-}
-
-.btn-reset:hover {
-  background: rgba(255, 107, 0, 0.1);
-  border-color: #ff6b00;
-}
-
-.btn-reset:hover svg {
-  opacity: 1;
-  transform: rotate(-90deg);
-  transition: transform 0.3s ease;
-}
-
-.filters-content {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-/* Search Input */
-.search-input-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.search-icon {
-  position: absolute;
-  left: 10px;
-  color: rgba(255, 255, 255, 0.4);
-  pointer-events: none;
-}
-
-.search-input {
-  width: 100%;
-  padding: 7px 10px 7px 36px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 107, 0, 0.2);
-  border-radius: 4px;
-  color: #ffffff;
-  font-size: 12px;
-  transition: all 0.2s ease;
-}
-
-.search-input:focus {
-  outline: none;
-  background: rgba(255, 255, 255, 0.08);
-  border-color: #ff6b00;
-  box-shadow: 0 0 0 2px rgba(255, 107, 0, 0.1);
-}
-
-.search-input::placeholder {
-  color: rgba(255, 255, 255, 0.3);
-}
-
-/* Filter Tags */
-.filter-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.filter-tag {
-  padding: 6px 12px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 107, 0, 0.2);
-  border-radius: 20px;
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 11px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  text-transform: capitalize;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.filter-tag svg {
-  opacity: 0.6;
-}
-
-.filter-tag:hover {
-  border-color: rgba(255, 107, 0, 0.4);
-  background: rgba(255, 107, 0, 0.08);
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.filter-tag.active {
-  background: rgba(255, 107, 0, 0.15);
-  border-color: #ff6b00;
-  color: #ff6b00;
-}
-
-.filter-tag.active svg {
-  opacity: 1;
-}
-
-/* Loading State */
-.loading-state {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 107, 0, 0.2);
-  border-radius: 8px;
-  padding: 60px;
-  text-align: center;
-}
-
-.loading-spinner {
-  width: 48px;
-  height: 48px;
-  margin: 0 auto 20px;
-  border: 4px solid rgba(255, 107, 0, 0.1);
-  border-top-color: #ff6b00;
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-.loading-state p {
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 14px;
-}
-
-/* Empty State */
-.empty-state {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 107, 0, 0.2);
-  border-radius: 8px;
-  padding: 60px;
-  text-align: center;
-}
-
-.empty-icon {
-  margin-bottom: 16px;
-  opacity: 0.3;
-}
-
-.empty-icon svg {
-  color: rgba(255, 255, 255, 0.4);
-}
-
-.empty-state h3 {
-  font-size: 18px;
-  margin-bottom: 8px;
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.empty-state p {
-  color: rgba(255, 255, 255, 0.4);
-  font-size: 14px;
-}
-
-/* API Grid */
 .api-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 24px;
+}
+
+/* Responsive breakpoints */
+@media (max-width: 1200px) {
+  .api-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .api-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .marketplace-card {
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 107, 0, 0.2);
-  border-radius: 8px;
-  padding: 20px;
+  border-radius: 12px;
+  padding: 24px;
   cursor: pointer;
   transition: all 0.3s ease;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
+  min-height: 280px;
 }
 
 .marketplace-card:hover {
   background: rgba(255, 255, 255, 0.04);
   border-color: rgba(255, 107, 0, 0.4);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(255, 107, 0, 0.15);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(255, 107, 0, 0.2);
 }
 
 .card-header {
@@ -587,7 +348,7 @@ onMounted(() => {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
 }
 
 .card-header h3 {
@@ -595,33 +356,42 @@ onMounted(() => {
   font-weight: 700;
   margin: 0;
   color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.verified-badge {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
 }
 
 .api-id {
-  font-size: 10px;
+  font-size: 11px;
   color: rgba(255, 255, 255, 0.4);
-  font-weight: 600;
+  font-family: 'Monaco', 'Courier New', monospace;
 }
 
 .network-badge {
-  padding: 4px 8px;
+  padding: 6px 12px;
   background: rgba(255, 107, 0, 0.15);
   border: 1px solid rgba(255, 107, 0, 0.3);
-  border-radius: 4px;
-  font-size: 10px;
+  border-radius: 6px;
+  font-size: 11px;
   text-transform: uppercase;
   font-weight: 700;
   color: #ff8c00;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.5px;
   white-space: nowrap;
   flex-shrink: 0;
 }
 
 .card-description {
   color: rgba(255, 255, 255, 0.6);
-  line-height: 1.5;
-  font-size: 13px;
-  min-height: 40px;
+  line-height: 1.6;
+  font-size: 14px;
+  flex: 1;
   margin: 0;
 }
 
@@ -629,7 +399,7 @@ onMounted(() => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 12px;
+  padding-top: 16px;
   border-top: 1px solid rgba(255, 107, 0, 0.1);
   margin-top: auto;
 }
@@ -641,78 +411,41 @@ onMounted(() => {
 .price-tag {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
 }
 
 .price-label {
   font-size: 10px;
   text-transform: uppercase;
-  letter-spacing: 0.3px;
+  letter-spacing: 0.5px;
   color: rgba(255, 255, 255, 0.4);
   font-weight: 600;
 }
 
 .price-value {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 800;
   color: #ff6b00;
 }
 
 .btn-use {
-  padding: 7px 14px;
+  padding: 10px 16px;
   background: rgba(255, 107, 0, 0.15);
   border: 1px solid rgba(255, 107, 0, 0.3);
-  border-radius: 4px;
+  border-radius: 6px;
   color: #ff6b00;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
   display: flex;
   align-items: center;
-  gap: 6px;
-}
-
-.btn-use svg {
-  opacity: 0.7;
+  gap: 8px;
 }
 
 .btn-use:hover {
   background: rgba(255, 107, 0, 0.25);
   border-color: #ff6b00;
   transform: translateX(2px);
-}
-
-.btn-use:hover svg {
-  opacity: 1;
-  transform: translateX(2px);
-  transition: transform 0.2s ease;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .container {
-    padding: 24px 16px 60px;
-  }
-
-  .page-title {
-    font-size: 28px;
-  }
-
-  .stats-overview {
-    grid-template-columns: 1fr;
-  }
-
-  .api-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .filters-content {
-    gap: 12px;
-  }
-
-  .filter-tags {
-    gap: 6px;
-  }
 }
 </style>

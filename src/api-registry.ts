@@ -11,6 +11,7 @@ export interface ApiConfig {
   price: string;
   network: string;
   is_active: number;
+  verified: number;
   headers?: string; // JSON string of custom headers (private field)
   created_at: number;
   updated_at: number;

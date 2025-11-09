@@ -8,6 +8,7 @@ export interface Api {
   price: string;
   network: string;
   is_active: number;
+  verified: number;
   headers?: Record<string, string>; // Custom headers for proxy requests
   created_at: number;
   updated_at: number;

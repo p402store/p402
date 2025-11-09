@@ -24,12 +24,13 @@ app.get("/api/public/apis", async (c) => {
     const apis = await registry.getAllActiveApis();
     
     // Remove sensitive fields from response (including headers)
-    const publicApis = apis.map(({ id, api_name, description, price, network, owner_address, created_at, documentation, tags }) => ({
+    const publicApis = apis.map(({ id, api_name, description, price, network, owner_address, created_at, documentation, tags,verified }) => ({
       id,
       api_name,
       description,
       price,
       network,
+      verified,
       owner_address,
       created_at,
       documentation,
@@ -348,6 +349,7 @@ app.post("/manage/register", async (c) => {
       api_name,
       description,
       target_url,
+      verified: 0,
       price,
       network,
       headers: headersStr,
