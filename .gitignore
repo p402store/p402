@@ -43,3 +43,4 @@ lerna-debug.log*
 # scripts temp files
 /tmp/api_seed_*.sql
 scripts/output/
+.vscode/*
